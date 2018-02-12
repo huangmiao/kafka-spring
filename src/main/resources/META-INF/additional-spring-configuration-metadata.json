@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "kafka.bootstrap.servers",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.bootstrap.servers'"
+  },
+  {
+    "name": "kafka.consumer.enable",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.enable'"
+  },
+  {
+    "name": "kafka.producer.enable",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.producer.enable'"
+  },
+  {
+    "name": "kafka.producer.names",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.producer.names'"
+  },
+  {
+    "name": "kafka.consumer.names",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.names'"
+  },
+  {
+    "name": "kafka.consumer.conname1.topics",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.conname1.topics'"
+  },
+  {
+    "name": "kafka.consumer.conname1.invoke.bean",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.conname1.invoke.bean'"
+  },
+  {
+    "name": "kafka.consumer.conname1.invoke.method",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.conname1.invoke.method'"
+  },
+  {
+    "name": "kafka.consumer.conname1.invoke.callback",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.consumer.conname1.invoke.callback'"
+  }
+]}
