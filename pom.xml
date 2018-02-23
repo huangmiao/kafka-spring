@@ -13,7 +13,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <project.repository.url>http://192.168.1.200:8081</project.repository.url>
   </properties>
   <dependencies>
   	 <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -46,38 +45,4 @@
         <version>4.3.10.RELEASE</version>
     </dependency>
   </dependencies>
-  <build>
-  		<plugins>
-  			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-javadoc-plugin</artifactId>
-			    <configuration>
-			    	<charset>UTF-8</charset> 
-			    </configuration>
-			</plugin>
- 	       	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding> 
-				</configuration>
-	 		</plugin>
-  	   </plugins>
-  </build>
-  <distributionManagement>
-	  <repository>
-	    <id>nexus-releases</id>
-	    <name>nexus-releases</name>
-	    <url>${project.repository.url}/nexus/content/repositories/releases/</url>
-	    <uniqueVersion>true</uniqueVersion>
-	  </repository>
-	  <snapshotRepository>
-	    <id>nexus-snapshots</id>
-	    <name>nexus-snapshots</name>
-	    <url>${project.repository.url}/nexus/content/repositories/snapshots/</url>
-	    <uniqueVersion>true</uniqueVersion>
-	  </snapshotRepository>
-</distributionManagement>
 </project>
