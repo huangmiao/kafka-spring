@@ -4,7 +4,7 @@
 
   <groupId>com.mhuang.common</groupId>
   <artifactId>kafka</artifactId>
-  <version>0.0.3.2</version>
+  <version>0.0.3.3</version>
   <packaging>jar</packaging>
 
   <name>kafka</name>
@@ -44,5 +44,10 @@
        <artifactId>spring-web</artifactId>
         <version>4.3.10.RELEASE</version>
     </dependency>
+    <dependency>
+		 <groupId>com.mhuang.common</groupId>
+		  <artifactId>util</artifactId>
+		  <version>0.0.1.1</version>
+	</dependency>
   </dependencies>
 </project>

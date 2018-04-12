@@ -24,16 +24,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.context.annotation.ScopeMetadataResolver;
 import org.springframework.core.env.Environment;
-import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mhuang.common.spring.properties.RelaxedPropertyResolver;
 import com.mhuang.kafka.common.bean.ConsumerBean;
 import com.mhuang.kafka.common.bean.KafkaInfo;
 import com.mhuang.kafka.common.bean.ProducerBean;
 import com.mhuang.kafka.common.constans.KafkaGlobal;
 import com.mhuang.kafka.common.consumer.rec.KafkaJConsumer;
 import com.mhuang.kafka.common.producer.send.KafkaJProducer;
-import com.mhuang.kafka.common.utils.boot.RelaxedPropertyResolver;
 
 /**
  * 
