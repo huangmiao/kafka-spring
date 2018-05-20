@@ -13,9 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-
     <project.repository.url>http://192.168.1.210:8181</project.repository.url>
-
   </properties>
   <dependencies>
   	 <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -88,5 +86,4 @@
 	    <uniqueVersion>true</uniqueVersion>
 	  </snapshotRepository>
 </distributionManagement>
->>>>>>> kafka版本升级！
 </project>
