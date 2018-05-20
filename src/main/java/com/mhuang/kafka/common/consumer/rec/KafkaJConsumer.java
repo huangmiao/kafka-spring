@@ -70,17 +70,10 @@ public class KafkaJConsumer {
 		StringBuilder  sb = new StringBuilder();
 		for(int i = 0,j = partitionList.size(); i<j; i++){
 			int partition = partitionList.get(i).partition();
-			if(j - 1 == i){
+			if(j - 1 == i || (threadPartionNum -1) % i == 0){//解决除数为0的情况下
 				sb.append("|").append(partition);
 				operaParttionList.add(new TopicPartition(topic, partition));
-				cloneProps.put("group.id", topic + "-group-" + sb.toString());
-				initPartition(cloneProps,operaParttionList);
-				operaParttionList = new ArrayList<>(); 
-				sb = new StringBuilder();
-			}else if((threadPartionNum -1) % i == 0){//解决除数为0的情况下
-				sb.append("|").append(partition);
-				operaParttionList.add(new TopicPartition(topic, partition));
-				cloneProps.put("group.id", topic + "-group-" + sb.toString());
+				cloneProps.put("group.id", sb.insert(0, "-group-").insert(0, topic).toString());
 				initPartition(cloneProps,operaParttionList);
 				operaParttionList = new ArrayList<>(); 
 				sb = new StringBuilder();
