@@ -1,11 +1,13 @@
 package com.mhuang.kafka.common.consumer.rec;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
+import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -63,15 +65,60 @@ public class KafkaJConsumer {
 		KafkaConsumer<Object, Object> consumer = new KafkaConsumer<>(props);
 		List<PartitionInfo> partitionList = consumer.partitionsFor(topic);
 		consumer.close();
+		Integer threadPartionNum = consumerBean.getThreadPartitionNum();
+		List<TopicPartition>  operaParttionList = new ArrayList<>();
+		StringBuilder  sb = new StringBuilder();
+		for(int i = 0,j = partitionList.size(); i<j; i++){
+			int partition = partitionList.get(i).partition();
+			if(j - 1 == i){
+				sb.append("|").append(partition);
+				operaParttionList.add(new TopicPartition(topic, partition));
+				cloneProps.put("group.id", topic + "-group-" + sb.toString());
+				initPartition(cloneProps,operaParttionList);
+				operaParttionList = new ArrayList<>(); 
+				sb = new StringBuilder();
+			}else if((threadPartionNum -1) % i == 0){//解决除数为0的情况下
+				sb.append("|").append(partition);
+				operaParttionList.add(new TopicPartition(topic, partition));
+				cloneProps.put("group.id", topic + "-group-" + sb.toString());
+				initPartition(cloneProps,operaParttionList);
+				operaParttionList = new ArrayList<>(); 
+				sb = new StringBuilder();
+			}else{
+				sb.append("|").append(partition);
+			}
+		}
+		/*
+		@Deprecated
 		for(PartitionInfo partition : partitionList){
 			cloneProps.put("group.id", topic + "-group-" + partition.partition());
 			initPartition(cloneProps,partition);
 		}
-			
-//		partitionList.parallelStream().forEach(partition->{
-//			initPartition(cloneProps,partition);
-//		});
+		*/
 	}
+	
+	private void initPartition(Map<String, Object> props,List<TopicPartition> partitions){
+		Map<String, Object> params = new HashMap<>(5);
+		params.put("consumerMap", props);
+		params.put("consumerBean", consumerBean);
+		params.put("partition", partitions);
+		KafkaJConsumerThread kafkaThread = SpringContextHolder.registerBean(
+				String.valueOf(props.get("group.id")), 
+			KafkaJConsumerThread.class, params
+		);
+		executor.submit(kafkaThread);
+	}
+	
+	/**
+	 * 
+	 * @Title: initPartition   
+	 * @Description: 旧方法
+	 *   0.0.3.3之前使用
+	 * @param props
+	 * @param partition
+	 * @return void
+	 */
+	@Deprecated
 	private void initPartition(Map<String, Object> props,PartitionInfo partition){
 		Map<String, Object> params = new HashMap<>(5);
 		params.put("consumerMap", props);

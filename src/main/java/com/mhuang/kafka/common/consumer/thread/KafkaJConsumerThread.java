@@ -1,14 +1,12 @@
 package com.mhuang.kafka.common.consumer.thread;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +28,10 @@ import lombok.Setter;
  */
 public class KafkaJConsumerThread implements Runnable{
 
+//	@Setter
+//	private PartitionInfo partition;
 	@Setter
-	private PartitionInfo partition;
+	private List<TopicPartition> partition;
 	
 	@Setter
 	private Map<String, Object> consumerMap;
@@ -54,7 +54,8 @@ public class KafkaJConsumerThread implements Runnable{
 		Boolean isCallBackMethod = !StringUtils.isEmpty(consumerBean.getInvokeCallback());
 		logger.info("start conumser properties:{}",consumerMap);
 		consumer = new KafkaConsumer<>(consumerMap);
-		consumer.assign(Arrays.asList(new TopicPartition(partition.topic(), partition.partition())));
+//		consumer.assign(Arrays.asList(new TopicPartition(partition.topic(), partition.partition())));
+		consumer.assign(partition);
 		
 		while(running.get()){
 			ConsumerRecords<Object, Object> records = consumer.poll(consumerBean.getPull());

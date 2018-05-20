@@ -267,7 +267,8 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 			enableAutoCommit = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT, KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT_DEFAULT),
 			sessionTimeOutMs = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS, KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS_DEFAULT),
 			autoCommitIntervalMs = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS, KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS_DEFAULT),
-			autoOffsetReset = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET_DEFAULT);
+			autoOffsetReset = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET_DEFAULT),
+			threadPartitionNum = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION, KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION_DEFAULT);
 		map.put(KafkaGlobal.FIELD_KEY_DESERIALIZER, keySerializer);
 		map.put(KafkaGlobal.FIELD_VALUE_DESERIALIZER, valueSerializer);
 		map.put(KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT, enableAutoCommit);
@@ -275,6 +276,7 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 		map.put(KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS, autoCommitIntervalMs);
 		map.put(KafkaGlobal.FIELD_CONSUMER_PULL, pull);
 		map.put(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, autoOffsetReset);
+		map.put(KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION, threadPartitionNum);
 	}
 	/**
 	 * 

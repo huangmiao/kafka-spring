@@ -4,7 +4,7 @@
 
   <groupId>com.mhuang.common</groupId>
   <artifactId>kafka</artifactId>
-  <version>0.0.3.3</version>
+  <version>0.0.3.3.1</version>
   <packaging>jar</packaging>
 
   <name>kafka</name>
@@ -13,6 +13,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
+
+    <project.repository.url>http://192.168.1.210:8181</project.repository.url>
+
   </properties>
   <dependencies>
   	 <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -50,4 +53,40 @@
 		  <version>0.0.1.1</version>
 	</dependency>
   </dependencies>
+
+  <build>
+  		<plugins>
+  			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-javadoc-plugin</artifactId>
+			    <configuration>
+			    	<charset>UTF-8</charset> 
+			    </configuration>
+			</plugin>
+ 	       	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding> 
+				</configuration>
+	 		</plugin>
+  	   </plugins>
+  </build>
+  <distributionManagement>
+	  <repository>
+	    <id>nexus-releases</id>
+	    <name>nexus-releases</name>
+	    <url>${project.repository.url}/repository/maven-releases//</url>
+	    <uniqueVersion>true</uniqueVersion>
+	  </repository>
+	  <snapshotRepository>
+	    <id>nexus-snapshots</id>
+	    <name>nexus-snapshots</name>
+	    <url>${project.repository.url}/repository/maven-snapshots/</url>
+	    <uniqueVersion>true</uniqueVersion>
+	  </snapshotRepository>
+</distributionManagement>
+>>>>>>> kafka版本升级！
 </project>

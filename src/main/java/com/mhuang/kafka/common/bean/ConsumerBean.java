@@ -39,6 +39,9 @@ public class ConsumerBean extends KafkaBean{
 	
 	@JSONField(serialize = false)
 	private Integer pull;
+
+	@JSONField(serialize = false,name = "thread.partition.num")
+	private Integer threadPartitionNum;
 	
 	@JSONField(name = "enable.auto.commit")
 	private Boolean enableAutoCommit;

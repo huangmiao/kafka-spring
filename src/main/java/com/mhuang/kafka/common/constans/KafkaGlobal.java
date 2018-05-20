@@ -94,6 +94,9 @@ public class KafkaGlobal {
 	public final static String FIELD_CONSUMER_AUTO_OFFSET_RESET_DEFAULT = "latest";
 	public final static String FIELD_CONSUMER_PULL  = "pull";
 	public final static Integer FIELD_CONSUMER_PULL_DEFAULT  = 200;
+	public final static String FIELD_CONSUMER_THREAD_PARTITION = "thread.partition.num";
+	public final static Integer FIELD_CONSUMER_THREAD_PARTITION_DEFAULT = 1;
 	public final static String FIELD_CONSUMER_INVOKE_BEAN = "invoke.bean";
 	public final static String FIELD_CONSUMER_INVOKE_METHOD = "invoke.method";
+	
 }
