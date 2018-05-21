@@ -68,9 +68,13 @@ public class KafkaJConsumer {
 		Integer threadPartionNum = consumerBean.getThreadPartitionNum();
 		List<TopicPartition>  operaParttionList = new ArrayList<>();
 		StringBuilder  sb = new StringBuilder();
-		for(int i = 0,j = partitionList.size(); i<j; i++){
+		int crtParitionCount =  partitionList.size();
+		if(threadPartionNum > crtParitionCount){ //如果设置的分片数大于当前的分片数
+			threadPartionNum = crtParitionCount; //放入一个线程处理
+		}
+		for(int i = 0; i<crtParitionCount; i++){
 			int partition = partitionList.get(i).partition();
-			if(j - 1 == i || (threadPartionNum -1) % i == 0){//解决除数为0的情况下
+			if(crtParitionCount - 1 == i || (threadPartionNum -1) % i == 0){//解决除数为0的情况下
 				sb.append("|").append(partition);
 				operaParttionList.add(new TopicPartition(topic, partition));
 				cloneProps.put("group.id", sb.insert(0, "-group-").insert(0, topic).toString());
