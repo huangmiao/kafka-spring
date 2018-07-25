@@ -85,13 +85,6 @@ public class KafkaJConsumer {
 				sb.append("|").append(partition);
 			}
 		}
-		/*
-		@Deprecated
-		for(PartitionInfo partition : partitionList){
-			cloneProps.put("group.id", topic + "-group-" + partition.partition());
-			initPartition(cloneProps,partition);
-		}
-		*/
 	}
 	
 	private void initPartition(Map<String, Object> props,List<TopicPartition> partitions){
@@ -101,28 +94,6 @@ public class KafkaJConsumer {
 		params.put("partition", partitions);
 		KafkaJConsumerThread kafkaThread = SpringContextHolder.registerBean(
 				String.valueOf(props.get("group.id")), 
-			KafkaJConsumerThread.class, params
-		);
-		executor.submit(kafkaThread);
-	}
-	
-	/**
-	 * 
-	 * @Title: initPartition   
-	 * @Description: 旧方法
-	 *   0.0.3.3之前使用
-	 * @param props
-	 * @param partition
-	 * @return void
-	 */
-	@Deprecated
-	private void initPartition(Map<String, Object> props,PartitionInfo partition){
-		Map<String, Object> params = new HashMap<>(5);
-		params.put("consumerMap", props);
-		params.put("consumerBean", consumerBean);
-		params.put("partition", partition);
-		KafkaJConsumerThread kafkaThread = SpringContextHolder.registerBean(
-			partition.topic() + "-group-" + partition.partition(), 
 			KafkaJConsumerThread.class, params
 		);
 		executor.submit(kafkaThread);

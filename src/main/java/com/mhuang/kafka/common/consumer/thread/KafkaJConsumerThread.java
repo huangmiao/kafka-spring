@@ -28,8 +28,6 @@ import lombok.Setter;
  */
 public class KafkaJConsumerThread implements Runnable{
 
-//	@Setter
-//	private PartitionInfo partition;
 	@Setter
 	private List<TopicPartition> partition;
 	
@@ -54,7 +52,6 @@ public class KafkaJConsumerThread implements Runnable{
 		Boolean isCallBackMethod = !StringUtils.isEmpty(consumerBean.getInvokeCallback());
 		logger.info("start conumser properties:{}",consumerMap);
 		consumer = new KafkaConsumer<>(consumerMap);
-//		consumer.assign(Arrays.asList(new TopicPartition(partition.topic(), partition.partition())));
 		consumer.assign(partition);
 		
 		while(running.get()){

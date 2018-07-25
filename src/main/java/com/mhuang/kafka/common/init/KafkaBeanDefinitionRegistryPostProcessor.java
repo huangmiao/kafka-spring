@@ -136,7 +136,6 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 	public void setEnvironment(Environment env) {
 		
 		RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, KafkaGlobal.FIELD_KAFKA);
-		
 		//proccess kafka common config properties
 		proccessConfig(propertyResolver);
 		
