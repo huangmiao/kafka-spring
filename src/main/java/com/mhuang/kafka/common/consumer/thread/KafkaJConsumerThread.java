@@ -120,11 +120,11 @@ public class KafkaJConsumerThread implements Runnable, ApplicationListener<Consu
     @Override
     public void onApplicationEvent(ConsumerEvent event) {
         if (event.getAction() == ConsumerAction.DESTROY) {
-            destroyPartition(event.getParams());
+            destroy(event.getParams());
         }
     }
 
-    private void destroyPartition(Map<String, Object> params) {
+    private void destroy(Map<String, Object> params) {
         Object destroyPartition = params.get(topic);
         if (destroyPartition != null) {
             logger.info("destory current topic:{} satisfied,params:{} ", topic, params);

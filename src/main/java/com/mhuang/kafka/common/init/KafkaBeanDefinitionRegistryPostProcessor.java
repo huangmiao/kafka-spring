@@ -236,8 +236,7 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 		Map<String, Object> nameProperty = propertyResolver.getSubProperties(subProperyKey.toString());
 		
 		Map<String, Object> map = new HashMap<>(nameProperty);
-		Object servers = map.getOrDefault(KafkaGlobal.FIELD_BOOTSTRAP_SERVERS, kafkaInfo.getServers());
-		map.put(KafkaGlobal.FIELD_BOOTSTRAP_SERVERS, servers);
+		map.putIfAbsent(KafkaGlobal.FIELD_BOOTSTRAP_SERVERS, kafkaInfo.getServers());
 		//save current Map
 		if(KafkaGlobal.FIELD_PRODUCER.equals(type)){
 			convertProducerMap(map);
@@ -255,27 +254,17 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 		
 		logger.info("loading {}:{} data:{}",name,type,nameProperty);
 		logger.info("loading {} properties --> {} sucess",type,name);
-		
-		subProperyKey = null;
 	}
 	
 	private void convertConsumerMap(Map<String,Object> map){
-		Object keySerializer = map.getOrDefault(KafkaGlobal.FIELD_KEY_DESERIALIZER, kafkaInfo.getKeyDeserializer()),
-			valueSerializer = map.getOrDefault(KafkaGlobal.FIELD_VALUE_DESERIALIZER, kafkaInfo.getValueDeserializer()),
-		 	pull = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_PULL, KafkaGlobal.FIELD_CONSUMER_PULL_DEFAULT),
-			enableAutoCommit = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT, KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT_DEFAULT),
-			sessionTimeOutMs = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS, KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS_DEFAULT),
-			autoCommitIntervalMs = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS, KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS_DEFAULT),
-			autoOffsetReset = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET_DEFAULT),
-			threadPartitionNum = map.getOrDefault(KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION, KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION_DEFAULT);
-		map.put(KafkaGlobal.FIELD_KEY_DESERIALIZER, keySerializer);
-		map.put(KafkaGlobal.FIELD_VALUE_DESERIALIZER, valueSerializer);
-		map.put(KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT, enableAutoCommit);
-		map.put(KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS, sessionTimeOutMs);
-		map.put(KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS, autoCommitIntervalMs);
-		map.put(KafkaGlobal.FIELD_CONSUMER_PULL, pull);
-		map.put(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, autoOffsetReset);
-		map.put(KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION, threadPartitionNum);
+        map.putIfAbsent(KafkaGlobal.FIELD_KEY_DESERIALIZER, kafkaInfo.getKeyDeserializer());
+		map.putIfAbsent(KafkaGlobal.FIELD_VALUE_DESERIALIZER, kafkaInfo.getValueDeserializer());
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_PULL, KafkaGlobal.FIELD_CONSUMER_PULL_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT, KafkaGlobal.FIELD_CONSUMER_ENABLE_AUTO_COMMIT_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS, KafkaGlobal.FIELD_CONSUMER_SESSION_TIMEOUT_MS_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS, KafkaGlobal.FIELD_CONSUMER_AUTO_COMMIT_INTERVAL_MS_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET, KafkaGlobal.FIELD_CONSUMER_AUTO_OFFSET_RESET_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION, KafkaGlobal.FIELD_CONSUMER_THREAD_PARTITION_DEFAULT);
 	}
 	/**
 	 * 
@@ -285,23 +274,15 @@ public class KafkaBeanDefinitionRegistryPostProcessor implements BeanDefinitionR
 	 * @return void
 	 */
 	private void convertProducerMap(Map<String, Object> map){
-		Object keySerializer = map.getOrDefault(KafkaGlobal.FIELD_KEY_SERIALIZER, kafkaInfo.getKeySerializer()),
-			valueSerializer = map.getOrDefault(KafkaGlobal.FIELD_VALUE_SERIALIZER, kafkaInfo.getValueSerializer()),
-			acks = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_ACKS, KafkaGlobal.FIELD_PRODUCER_ACKS_DEFAULT),
-			retries = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_RETRIES, KafkaGlobal.FIELD_PRODUCER_RETRIES_DEFAULT),
-			batchSize = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_BATCH_SIZE, KafkaGlobal.FIELD_PRODUCER_BATCH_SIZE_DEFAULT),
-			lingerMs = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_LINGERMS, KafkaGlobal.FIELD_PRODUCER_LINGERMS_DEFAULT),
-			bufferMemory = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_BUFFER_MEMORY, KafkaGlobal.FIELD_PRODUCER_BUFFER_MEMORY_DEFAULT),
-			partitionerClass = map.getOrDefault(KafkaGlobal.FIELD_PRODUCER_PARTITIONER_CLASS, KafkaGlobal.FIELD_PRODUCER_PARTITIONER_CLASS_FEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_KEY_SERIALIZER, kafkaInfo.getKeySerializer());
+		map.putIfAbsent(KafkaGlobal.FIELD_VALUE_SERIALIZER, kafkaInfo.getValueSerializer());
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_ACKS, KafkaGlobal.FIELD_PRODUCER_ACKS_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_RETRIES, KafkaGlobal.FIELD_PRODUCER_RETRIES_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_BATCH_SIZE, KafkaGlobal.FIELD_PRODUCER_BATCH_SIZE_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_LINGERMS, KafkaGlobal.FIELD_PRODUCER_LINGERMS_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_BUFFER_MEMORY, KafkaGlobal.FIELD_PRODUCER_BUFFER_MEMORY_DEFAULT);
+		map.putIfAbsent(KafkaGlobal.FIELD_PRODUCER_PARTITIONER_CLASS, KafkaGlobal.FIELD_PRODUCER_PARTITIONER_CLASS_FEFAULT);
 		
-		//setter init config file
-		map.put(KafkaGlobal.FIELD_KEY_SERIALIZER, keySerializer);
-		map.put(KafkaGlobal.FIELD_VALUE_SERIALIZER, valueSerializer);
-		map.put(KafkaGlobal.FIELD_PRODUCER_ACKS, acks);
-		map.put(KafkaGlobal.FIELD_PRODUCER_RETRIES, retries);
-		map.put(KafkaGlobal.FIELD_PRODUCER_BATCH_SIZE, batchSize);
-		map.put(KafkaGlobal.FIELD_PRODUCER_LINGERMS, lingerMs);
-		map.put(KafkaGlobal.FIELD_PRODUCER_BUFFER_MEMORY, bufferMemory);
-		map.put(KafkaGlobal.FIELD_PRODUCER_PARTITIONER_CLASS, partitionerClass);
+
 	}
 }
